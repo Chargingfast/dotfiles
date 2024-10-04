@@ -51,6 +51,7 @@ alias sb='cd /Users/timturner/Library/Mobile\ Documents/iCloud~md~obsidian/Docum
 alias scripts='cd $SCRIPTS'
 alias repo='cd $REPOS'
 alias lab='cd $REPOS/lab'
+alias lg='lazygit'
 # Directories
 
 export REPOS="$HOME/Repos"
