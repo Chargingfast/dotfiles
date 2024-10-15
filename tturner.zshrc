@@ -42,25 +42,48 @@ export VISUAL=nvim
 export EDITOR=nvim
 export TERM="tmux-256color"
 
-# ~~~~~~~~~~~~~~ Alias Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-alias vim="nvim"
-alias vi="nvim"
-alias v="nvim"
-alias k='kubectl'
-alias sb='cd /Users/timturner/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/Second\ Brain'
-alias scripts='cd $SCRIPTS'
-alias repo='cd $REPOS'
-alias lab='cd $REPOS/lab'
-alias lg='lazygit'
 # Directories
 
 export REPOS="$HOME/Repos"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$REPOS/dotfiles"
-export LAB="$GHREPOS/lab"
+export LAB="$REPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export ICLOUD="$HOME/icloud"
 export ZETTELKASTEN="$HOME/Zettelkasten"
+
+# ~~~~~~~~~~~~~~ Alias Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias sb='cd /Users/timturner/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/Second\ Brain'
+alias scripts='cd $SCRIPTS'
+alias repo='cd $REPOS'
+alias lab='cd $REPOS/lab'
+alias lg='lazygit'
+alias gs='git status'
+alias gp='git pull'
+alias la='ls -lathr'
+alias c='clear'
+alias e='exit'
+
+# Repos
+
+alias lab='cd $LAB'
+alias dot='cd $GHREPOS/dotfiles'
+alias repos='cd $REPOS'
+alias ghrepos='cd $GHREPOS'
+alias gr='ghrepos'
+alias cdgo='cd $GHREPOS/go/'
+alias rob='cd $REPOS/github.com/rwxrob'
+
+# ls
+
+alias ls='ls --color=auto'
+alias la='ls -lathr'
+
 
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
