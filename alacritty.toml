@@ -1,7 +1,7 @@
 # themes from https://github.com/alacritty/alacritty-theme
 
-# import = ["/Users/mischa/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+#import = ["~/.config/alacritty/themes/themes/iterm.toml"]
 
 [font]
 size = 25
@@ -16,5 +16,8 @@ decorations = "none"
 x = 7
 y = 0
 
+[selection]
+save_to_clipboard = true
+
 [shell]
-program = "tmux"
+program = "/opt/homebrew/bin/tmux"

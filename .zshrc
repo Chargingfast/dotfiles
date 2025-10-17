@@ -1,22 +1,34 @@
-# ~~~~~~~~~~~~~~~ SSH ~~~~~~~~~~~~~~~~~~~~~~~~
+# 11/5/23 TTurner: adding directory colors from ls
+
+export CLICOLOR=1
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
 
-# Using GPG + YubiKey for ssh.
-# Don't execute when in dev container
+#11/5/23 Tturner Adding color coded git prompter
 
+#autoload -Uz compinit && compinit
+#autoload -Uz add-zsh-hook
+#autoload -Uz vcs_info
 
-if [[ -z "$REMOTE_CONTAINERS" && -z "$CODESPACES" && -z "$DEVCONTAINER_TYPE" ]]; then
-  export GPG_TTY="$(tty)"
-  unset SSH_AGENT_PID
+#add-zsh-hook precmd vcs_info
 
-  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-  fi
+#zstyle ':vcs_info:*' enable git
+#zstyle ':vcs_info:*' formats " %F{cyan}%c%u(%b)%f"
+#zstyle ':vcs_info:*' actionformats " %F{cyan}%c%u(%b)%f %a"
+#zstyle ':vcs_info:*' stagedstr "%F{green}"
+#zstyle ':vcs_info:*' unstagedstr "%F{red}"
+#zstyle ':vcs_info:*' check-for-changes true
 
-  gpgconf --launch gpg-agent
-  gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+#zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
-fi
+#+vi-git-untracked() {
+#  if git --no-optional-locks status --porcelain 2> /dev/null | grep -q "^??"; then
+#    hook_com[staged]+="%F{red}"
+#  fi
+#}
+
+#setopt PROMPT_SUBST
+#export PROMPT='%n@%m %~ $vcs_info_msg_0_ %# '
 
 
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,25 +42,48 @@ export VISUAL=nvim
 export EDITOR=nvim
 export TERM="tmux-256color"
 
-export BROWSER="firefox"
-
 # Directories
 
 export REPOS="$HOME/Repos"
-export GITUSER="mischavandenburg"
 export GHREPOS="$REPOS/github.com/$GITUSER"
-export DOTFILES="$GHREPOS/dotfiles"
-export LAB="$GHREPOS/lab"
+export DOTFILES="$REPOS/dotfiles"
+export LAB="$REPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export ICLOUD="$HOME/icloud"
 export ZETTELKASTEN="$HOME/Zettelkasten"
 
-# Go related. In general all executables and scripts go in .local/bin
+# ~~~~~~~~~~~~~~ Alias Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias sb='cd /Users/timturner/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/Second\ Brain'
+alias scripts='cd $SCRIPTS'
+alias repo='cd $REPOS'
+alias lab='cd $REPOS/lab'
+alias lg='lazygit'
+alias gs='git status'
+alias gp='git pull'
+alias la='ls -lathr'
+alias c='clear'
+alias e='exit'
 
-export GOBIN="$HOME/.local/bin"
-export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
-# export GOPATH="$HOME/.local/share/go"
-export GOPATH="$HOME/go/"
+# Repos
+
+alias lab='cd $LAB'
+alias dot='cd $GHREPOS/dotfiles'
+alias repos='cd $REPOS'
+alias ghrepos='cd $GHREPOS'
+alias gr='ghrepos'
+alias cdgo='cd $GHREPOS/go/'
+alias rob='cd $REPOS/github.com/rwxrob'
+
+# ls
+
+alias ls='ls --color=auto'
+alias la='ls -lathr'
+
 
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,6 +93,7 @@ setopt extended_glob null_glob
 
 path=(
     $path                           # Keep existing PATH entries
+    /opt/homebrew/bin
     $HOME/bin
     $HOME/.local/bin
     $HOME/dotnet
@@ -73,26 +109,6 @@ typeset -U path
 path=($^path(N-/))
 
 export PATH
-
-
-# ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-if [ -d "/home/linuxbrew/.linuxbrew" ]; then
-     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-
-# ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
-
-setopt HIST_IGNORE_SPACE  # Don't save when prefixed with space
-setopt HIST_IGNORE_DUPS   # Don't save duplicate lines
-setopt SHARE_HISTORY      # Share history between sessions
 
 
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -111,84 +127,6 @@ autoload -U promptinit; promptinit
 prompt pure
 
 
-# ~~~~~~~~~~~~~~~ Aliases ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-alias v=nvim
-
-alias scripts='cd $SCRIPTS'
-alias cdblog="cd ~/websites/blog"
-alias c="clear"
-alias icloud="cd \$ICLOUD"
-
-# Repos
-
-alias lab='cd $LAB'
-alias dot='cd $GHREPOS/dotfiles'
-alias repos='cd $REPOS'
-alias ghrepos='cd $GHREPOS'
-alias gr='ghrepos'
-alias cdgo='cd $GHREPOS/go/'
-alias rob='cd $REPOS/github.com/rwxrob'
-
-# Homelab
-
-alias homelab='cd $GHREPOS/homelab/'
-alias hl='homelab'
-alias hlp='cd $GHREPOS/homelab-private/'
-alias hlps='cd $GHREPOS/homelab-private-staging/'
-alias hlpp='cd $GHREPOS/homelab-private-production/'
-alias skool='cd $GHREPOS/skool/'
-
-# ls
-
-alias ls='ls --color=auto'
-alias la='ls -lathr'
-# alias la='exa -laghm@ --all --icons --git --color=always'
-
-
-# finds all files recursively and sorts by last modification, ignore hidden files
-alias lastmod='find . -type f -not -path "*/\.*" -exec ls -lrt {} +'
-
-alias t='tmux'
-alias e='exit'
-
-alias syu='sudo pacman -Syu'
-
-# Azure
-
-alias sub='az account set -s'
-
-# Git
-
-alias gp='git pull'
-alias gs='git status'
-alias lg='lazygit'
-
-
-# Zettelkasten
-
-alias in="cd \$ZETTELKASTEN/0\ Inbox/"
-alias cdzk="cd \$ZETTELKASTEN"
-
-
-# Kubernetes
-
-alias k='kubectl'
-
-alias kgp='kubectl get pods'
-alias kc='kubectx'
-alias kn='kubens'
-
-alias fgk='flux get kustomizations'
-
-# Pass
-
-alias pc='pass show -c'
-
-# Devpod
-
-alias ds='devpod ssh'
 
 
 # ~~~~~~~~~~~~~~~ Completion ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -205,21 +143,18 @@ compinit -u
 
 zstyle ':completion:*' menu select
 
-
-# Example to install completion:
-# talosctl completion zsh > ~/.zfunc/_talosctl
-
-
 # ~~~~~~~~~~~~~~~ Sourcing ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-source "$HOME/.privaterc"
+#source "$HOME/.privaterc"
 source <(fzf --zsh)
-
+source <(kubectl completion zsh)
 eval "$(direnv hook zsh)"
 
-# ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/timturner/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
