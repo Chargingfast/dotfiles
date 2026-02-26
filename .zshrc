@@ -68,6 +68,7 @@ alias gp='git pull'
 alias la='ls -lathr'
 alias c='clear'
 alias e='exit'
+alias config='cd /Users/timturner/.config'
 
 # Repos
 
@@ -85,6 +86,17 @@ alias ls='ls --color=auto'
 alias la='ls -lathr'
 
 
+
+# ~~~~~~~~~~~~~~~ Zshell History ~~~~~~~~~~~~~~~~~~~~~~~~
+HISTSIZE=50000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -158,3 +170,6 @@ fpath+=~/.zfunc; autoload -Uz compinit; compinit
 export PATH="/Users/timturner/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# OpenClaw Completion
+source "/Users/timturner/.openclaw/completions/openclaw.zsh"

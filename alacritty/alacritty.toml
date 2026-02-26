@@ -1,0 +1,24 @@
+# themes from https://github.com/alacritty/alacritty-theme
+
+import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+#import = ["~/.config/alacritty/themes/themes/iterm.toml"]
+
+[font]
+size = 25
+
+[font.normal]
+family = "UbuntuMono Nerd Font"
+
+[window]
+decorations = "none"
+opacity = 0.8
+
+[window.padding]
+x = 7
+y = 0
+
+[selection]
+save_to_clipboard = true
+
+[shell]
+program = "/opt/homebrew/bin/tmux"
