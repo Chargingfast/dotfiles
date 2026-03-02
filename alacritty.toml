@@ -11,6 +11,7 @@ family = "UbuntuMono Nerd Font"
 
 [window]
 decorations = "none"
+opacity = 0.8
 
 [window.padding]
 x = 7
